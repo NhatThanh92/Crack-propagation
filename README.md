@@ -9,8 +9,8 @@ X-FEM enables the simulation of crack initiation and propagation along arbitrary
    Incorporate the shape of the crack, such as elliptic, demi-planar, or circular, at the location where crack initiation is assumed. Under monotonic loading conditions, it was assumed that a crack would propagate instantaneously once the stress intensity factor (K) or energy release rate (G) reached a critical value denoted as 𝐾I𝑐 or 𝐺𝑐.
 ![image](https://github.com/NhatThanh92/CrackPropagation/assets/51020597/ba6c3081-c46b-4dc0-b9e0-2f7fd5d12572)
    **Fig 1. Stress intensity factors K1,2,3 from elliptical crack.**
-![image](https://github.com/NhatThanh92/CrackPropagation/assets/51020597/dcfe48b9-a8ca-45ab-8cdb-d31cc808d624)
-   **Fig 2. Crack propagation with demi-plan (a) and elliptical crack (b).**
+![image](https://github.com/NhatThanh92/CrackPropagation/assets/51020597/e306c50f-593a-445e-93cc-5583843ecbc8)
+   **Fig 2. Crack propagation with demi-plan (a), elliptical crack (b) without implant,and with implant (c).**
 ### 2. Under cyclic loading conditions:
    Crack initiation occurs at a critical point, pinpointed as the location where fatigue damage peaks. At this juncture, damage accrues during cyclic loading, potentially leading to crack formation.
 
