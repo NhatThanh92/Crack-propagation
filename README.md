@@ -2,6 +2,7 @@
 This project concentrated on investigating tibial bone fractures, both with and without implants, aiming to furnish objective and quantitative measures for a deeper comprehension of the complete crack trajectory and fracture mechanics. The methodology employed the Extended Finite Element Method (X-FEM) integrated into Code Aster.
 
 X-FEM enables the simulation of crack initiation and propagation along arbitrary paths without necessitating remeshing.
+![image](https://github.com/NhatThanh92/CrackPropagation/assets/51020597/873499de-6885-487f-828f-4d3dbb2f6c96)
 
 Fracture Mechanics Analysis under Monotonic and Cyclic Loading Conditions:
 ## 1. Under monotonic loading:
