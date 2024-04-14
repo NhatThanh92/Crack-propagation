@@ -1,0 +1,90 @@
+DEBUT(LANG='EN')
+
+mesh = LIRE_MAILLAGE(UNITE=20)
+
+model = AFFE_MODELE(AFFE=_F(MODELISATION=('3D', ),
+                            PHENOMENE='MECANIQUE',
+                            TOUT='OUI'),
+                    MAILLAGE=mesh)
+
+corti = DEFI_MATERIAU(ELAS=_F(E=15300000000.0,
+                              NU=0.3))
+
+tra = DEFI_MATERIAU(ELAS=_F(E=117000000000.0,
+                            NU=0.3))
+
+cance = DEFI_MATERIAU(ELAS=_F(E=2400000000.0,
+                              NU=0.3))
+
+MAT = AFFE_MATERIAU(AFFE=(_F(GROUP_MA=('inside', ),
+                             MATER=(cance, )),
+                          _F(GROUP_MA=('outside', ),
+                             MATER=(corti, )),
+                          _F(GROUP_MA=('voltray', ),
+                             MATER=(tra, ))),
+                    MAILLAGE=mesh)
+
+LINST = DEFI_LIST_REEL(DEBUT=1.0,
+                       INTERVALLE=_F(JUSQU_A=8.0,
+                                     NOMBRE=7))
+
+COEF = DEFI_FONCTION(NOM_PARA='INST',
+                     PROL_DROITE='LINEAIRE',
+                     PROL_GAUCHE='LINEAIRE',
+                     VALE=(0.0, 0.0, 1.0, 1.0, 2.0, 0.0, 3.0, -1.0, 4.0, 0.0, 5.0, 1.0, 6.0, 0.0, 7.0, -1.0, 8.0, 0.0))
+
+F_WHOLER = DEFI_FONCTION(INTERPOL=('LOG', ),
+                         NOM_PARA='SIGM',
+                         PROL_DROITE='LINEAIRE',
+                         PROL_GAUCHE='LINEAIRE',
+                         VALE=(83.0, 209480.0, 86.0, 127590.0, 90.0, 271.0, 94.0, 324.0, 100.0, 11863.0, 103.0, 1.0, 104.0, 392.0, 110.0, 87.0, 114.0, 402.0, 122.0, 13.0, 130.6, 1.0))
+
+Ma_woh = DEFI_MATERIAU(FATIGUE=_F(WOHLER=F_WHOLER))
+
+load = AFFE_CHAR_MECA(DDL_IMPO=_F(DX=0.0,
+                                  DY=0.0,
+                                  DZ=0.0,
+                                  GROUP_NO=('fixed', )),
+                      FORCE_NODALE=_F(ANGL_NAUT=(-5.0, 0.0, 0.0),
+                                      FY=0.537,
+                                      GROUP_NO=('top', )),
+                      LIAISON_MAIL=_F(GROUP_MA_MAIT=('voltray', ),
+                                      GROUP_NO_ESCL=('slave', ),
+                                      TYPE_RACCORD='MASSIF'),
+                      MODELE=model)
+
+reslin = MECA_STATIQUE(CHAM_MATER=MAT,
+                       EXCIT=_F(CHARGE=load,
+                                FONC_MULT=COEF),
+                       LIST_INST=LINST,
+                       MODELE=model)
+
+reslin = CALC_CHAMP(reuse=reslin,
+                    CONTRAINTE=('SIGM_ELGA', 'SIGM_NOEU'),
+                    CRITERES=('SIEQ_ELGA', 'SIEQ_NOEU'),
+                    RESULTAT=reslin)
+
+table = POST_RELEVE_T(ACTION=_F(GROUP_NO=('Group_1', ),
+                                INTITULE='SIGMA_YY',
+                                NOM_CHAM='SIGM_NOEU',
+                                OPERATION=('EXTRACTION', ),
+                                RESULTAT=reslin,
+                                TOUT_CMP='OUI',
+                                TOUT_ORDRE='OUI'))
+
+ELGA = CALC_FATIGUE(DOMMAGE='WOHLER',
+                    HISTOIRE=_F(EQUI_GD='VMIS_SG',
+                                RESULTAT=reslin),
+                    INFO=1,
+                    MATER=Ma_woh,
+                    OPTION='DOMA_ELGA_SIGM',
+                    TYPE_CALCUL='CUMUL_DOMMAGE')
+
+IMPR_RESU(RESU=_F(MAILLAGE=mesh,
+                  RESULTAT=reslin),
+          UNITE=80)
+
+IMPR_TABLE(TABLE=table,
+           UNITE=8)
+
+FIN()
