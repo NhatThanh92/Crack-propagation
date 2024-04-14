@@ -1,0 +1,103 @@
+DEBUT(LANG='EN')
+
+mesh = LIRE_MAILLAGE(UNITE=20)
+
+model = AFFE_MODELE(AFFE=_F(MODELISATION=('3D', ),
+                            PHENOMENE='MECANIQUE',
+                            TOUT='OUI'),
+                    MAILLAGE=mesh)
+
+mater = DEFI_MATERIAU(ELAS=_F(E=2000000000.0,
+                              NU=0.1))
+
+fieldmat = AFFE_MATERIAU(AFFE=_F(MATER=(mater, ),
+                                 TOUT='OUI'),
+                         MODELE=model)
+
+nbcalc = 10
+FISS = [None]*nbcalc
+# ----------------------
+#   FIRST CRACK
+#----------------------
+FISS[0] = DEFI_FISS_XFEM(DEFI_FISS=_F(DEMI_GRAND_AXE=0.01,
+                                   DEMI_PETIT_AXE=0.005,
+                                   FORM_FISS='ELLIPSE',
+                                   CENTRE=(-0.034, -0.1, 0.0),
+                                   VECT_X = (1, 0, 1),
+                                   VECT_Y = (-1, 0, 1),
+                                   COTE_FISS='IN',),
+                                   MAILLAGE=mesh)
+
+#----------------------------------------------
+#         PROPAGATION 
+#----------------------------------------------
+MLX = [None]*nbcalc
+CH = [None]*nbcalc
+RESU = [None]*nbcalc
+SIF = [None]*nbcalc
+
+for i in range(nbcalc) :
+
+    MLX[i] = MODI_MODELE_XFEM(FISSURE=(FISS[i], ),
+                          MODELE_IN=model)
+
+    CH[i] = AFFE_CHAR_MECA(DDL_IMPO=(_F(DX=0.0,
+                                    DY=0.0,
+                                    DZ=0.0,
+                                    GROUP_NO=('fixed', )),
+                                 _F(DX=0.,
+                                    DY=0.01,
+                                    DZ=0.,
+                                    GROUP_NO=('top', ))),
+                       MODELE=MLX[i])
+
+    RESU[i] = MECA_STATIQUE(CHAM_MATER=fieldmat,
+                       EXCIT=_F(CHARGE=CH[i]),
+                       MODELE=MLX[i])
+    SIF[i]=CALC_G(RESULTAT=RESU[i],
+                 OPTION='CALC_K_G',
+                 THETA=_F( FISSURE=FISS[i]),
+                 #LISSAGE=_F(LISSAGE_THETA='LAGRANGE',LISSAGE_G='LAGRANGE'),
+                 LISSAGE=_F(DEGRE=0),
+                 )
+    IMPR_TABLE(TABLE=SIF[i]);
+    #-----------
+    #  CRACK PROPAGATION
+    #------------------------
+    if ( i != (nbcalc-1) ) :
+          FISS[i+1] = CO('FISS_%d'%(i+1))
+          PROPA_FISS(MODELE=MLX[i],
+                     FISSURE=_F(FISS_ACTUELLE=FISS[i],
+                                FISS_PROPAGEE=FISS[i+1],
+                                TABLE=SIF[i],),
+                     METHODE_PROPA='SIMPLEXE',
+                     LOI_PROPA=_F(LOI='PARIS',
+                                  C=1.,
+                                  M=1.,
+                                  MATER=mater,),
+                     COMP_LINE=_F(COEF_MULT_MINI=0.,
+                                  COEF_MULT_MAXI=1.,),
+                     DA_MAX=0.005,
+                     RAYON=0.01,
+                     INFO=1,);
+          
+MAXF = [None]*nbcalc
+MOX = [None]*nbcalc
+DEPL = [None]*nbcalc
+for i in range(nbcalc) :
+    MAXF[i]=POST_MAIL_XFEM(MODELE=MLX[i],
+                            );
+    MOX[i]=AFFE_MODELE(MAILLAGE=MAXF[i],
+                        AFFE=_F(TOUT='OUI',
+                                PHENOMENE='MECANIQUE',
+                                MODELISATION='3D',),)
+    DEPL[i]=POST_CHAM_XFEM(
+                        MODELE_VISU= MOX[i],
+                        RESULTAT=RESU[i],
+                        );
+    
+    IMPR_RESU(FORMAT='MED',
+            UNITE=31,
+            RESU=_F(RESULTAT=DEPL[i],MAILLAGE=MAXF[i]),);
+
+FIN()
