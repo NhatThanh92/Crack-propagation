@@ -12,15 +12,13 @@ X-FEM enables the simulation of crack initiation and propagation along arbitrary
    **Fig 2. Crack propagation with demi-plan (a) and elliptical crack (b).**
 ### 2. Under cyclic loading conditions:
    Crack initiation occurs at a critical point, pinpointed as the location where fatigue damage peaks. At this juncture, damage accrues during cyclic loading, potentially leading to crack formation.
-
+   ![image](https://github.com/user-attachments/assets/5d4e706e-52fb-4bba-92f2-cc9d8eb15688)
+   **Fig 3. Critical Point Identification Process.**
    Furthermore, fatigue damage, represented by D = 1/N, can be inferred from the number of cycles N, determined through interpolation from an endurance diagram, commonly known as the Wöhler curve (or S–N curve).
    ![image](https://github.com/user-attachments/assets/b02c1e1e-779b-4e06-9bf3-fae1c1da261f)
-
-
+   **Fig 4.  S–N curve and Damage analysis. 
    Finally, incorporate the shape of the crack at the critical point and conduct comprehensive crack analysis (Ki, G) and crack propagation analysis.
-   
-   ![image](https://github.com/user-attachments/assets/c6167b93-b290-4caa-9d8c-03ddb93cb053)
-   **Fig 3. Critical Point Identification Process.**
+  
 
 ## References
    Nguyen, Ho-Quang, Trieu-Nhat-Thanh Nguyen, Thinh-Quy-Duc Pham, Van-Dung Nguyen, Xuan Van Tran, and Tien-Tuan Dao. "Crack propagation in the tibia bone within total knee replacement using the extended finite element method." Applied Sciences 11, no. 10 (2021): 4435.  https://doi.org/10.3390/app11104435
