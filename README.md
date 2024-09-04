@@ -16,5 +16,7 @@ X-FEM enables the simulation of crack initiation and propagation along arbitrary
    Furthermore, fatigue damage, represented by D = 1/N, can be inferred from the number of cycles N, determined through interpolation from an endurance diagram, commonly known as the Wöhler curve (or S–N curve).
 
    Finally, incorporate the shape of the crack at the critical point and conduct comprehensive crack analysis (Ki, G) and crack propagation analysis.
+   ![image](https://github.com/user-attachments/assets/c6167b93-b290-4caa-9d8c-03ddb93cb053)
+
 ## References
    Nguyen, Ho-Quang, Trieu-Nhat-Thanh Nguyen, Thinh-Quy-Duc Pham, Van-Dung Nguyen, Xuan Van Tran, and Tien-Tuan Dao. "Crack propagation in the tibia bone within total knee replacement using the extended finite element method." Applied Sciences 11, no. 10 (2021): 4435.  https://doi.org/10.3390/app11104435
