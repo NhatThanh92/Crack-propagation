@@ -20,6 +20,7 @@ X-FEM enables the simulation of crack initiation and propagation along arbitrary
    
    ![image](https://github.com/user-attachments/assets/b02c1e1e-779b-4e06-9bf3-fae1c1da261f)
    **Fig 4.  S–N curve and Damage analysis.**
+   
    Finally, incorporate the shape of the crack at the critical point and conduct comprehensive crack analysis (Ki, G) and crack propagation analysis.
   
 
