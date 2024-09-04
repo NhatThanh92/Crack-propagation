@@ -13,7 +13,9 @@ X-FEM enables the simulation of crack initiation and propagation along arbitrary
 ### 2. Under cyclic loading conditions:
    Crack initiation occurs at a critical point, pinpointed as the location where fatigue damage peaks. At this juncture, damage accrues during cyclic loading, potentially leading to crack formation.
    ![image](https://github.com/user-attachments/assets/432caa60-8cc9-4c0b-a0cc-15686d5901be)
+   
    **Fig 3. Critical Point Identification Process.**
+   
    Furthermore, fatigue damage, represented by D = 1/N, can be inferred from the number of cycles N, determined through interpolation from an endurance diagram, commonly known as the Wöhler curve (or S–N curve).
    
    ![image](https://github.com/user-attachments/assets/b02c1e1e-779b-4e06-9bf3-fae1c1da261f)
