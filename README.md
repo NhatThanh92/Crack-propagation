@@ -25,4 +25,4 @@ X-FEM enables the simulation of crack initiation and propagation along arbitrary
   
 
 ## References
-   Nguyen, Ho-Quang, Trieu-Nhat-Thanh Nguyen, Thinh-Quy-Duc Pham, Van-Dung Nguyen, Xuan Van Tran, and Tien-Tuan Dao. "Crack propagation in the tibia bone within total knee replacement using the extended finite element method." Applied Sciences 11, no. 10 (2021): 4435.  https://doi.org/10.3390/app11104435
+   Nguyen, Ho-Quang, **Trieu-Nhat-Thanh Nguyen**, Thinh-Quy-Duc Pham, Van-Dung Nguyen, Xuan Van Tran, and Tien-Tuan Dao. "Crack propagation in the tibia bone within total knee replacement using the extended finite element method." Applied Sciences 11, no. 10 (2021): 4435.  https://doi.org/10.3390/app11104435
